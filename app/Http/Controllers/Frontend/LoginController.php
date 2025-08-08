@@ -15,6 +15,11 @@ class LoginController extends Controller
         return view('frontend.login');
     }
 
+    public function showLoginForm() // Renamed from login()
+    {
+        return view('frontend.login');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
