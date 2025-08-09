@@ -3,68 +3,69 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\LoginModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function login()
+    // Show login page
+    public function showLoginForm()
     {
         return view('frontend.login');
     }
 
-    public function showLoginForm() // Renamed from login()
+    // Handle login
+    public function login(Request $request)
     {
-        return view('frontend.login');
+        $credentials = $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string|min:6',
+        ]);
+
+        if (Auth::guard('web')->attempt($credentials, $request->filled('remember'))) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
+        }
+
+        return back()->withErrors([
+            'username' => 'Invalid username or password.',
+        ])->onlyInput('username');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Logout
+    public function logout(Request $request)
     {
-        //
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login')->with('success', 'Logged out successfully.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    // Show registration page
+    public function showRegistrationForm()
     {
-        //
+        return view('auth.register');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Handle registration
+    public function register(Request $request)
     {
-        //
-    }
+        $data = $request->validate([
+            'username' => 'required|string|unique:login,username',
+            'email'    => 'required|email|unique:login,email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $user = LoginModel::create([
+            'username' => $data['username'],
+            'email'    => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        Auth::login($user);
+        return redirect('/dashboard')->with('success', 'Account created successfully.');
     }
 }
+
