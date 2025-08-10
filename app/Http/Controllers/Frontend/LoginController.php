@@ -52,16 +52,16 @@ class LoginController extends Controller
     // Handle registration
     public function register(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'username' => 'required|string|unique:login,username',
             'email'    => 'required|email|unique:login,email',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
         ]);
 
         $user = LoginModel::create([
-            'username' => $data['username'],
-            'email'    => $data['email'],
-            'password' => Hash::make($data['password']),
+            'username' => $request->username,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
         Auth::login($user);

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +8,7 @@ class LoginModel extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = 'login'; // Your custom table name
+    protected $table = 'login';
 
     protected $fillable = [
         'username',

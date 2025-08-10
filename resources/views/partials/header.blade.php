@@ -2,7 +2,7 @@
     <div class="nav-bar-header-one">
         <div class="header-logo">
             <a href="{{ route('dashboard.index') }}">
-                <img src="{{ asset('img/logo.png') }}" alt="logo">
+                <img src="{{ asset('img/WTS.png') }}">
             </a>
         </div>
          <div class="toggle-button sidebar-toggle">
@@ -41,7 +41,7 @@
                 <a class="navbar-nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                     aria-expanded="false">
                     <div class="admin-title">
-                        <h5 class="item-title">{{ Auth::user()->name ?? 'Stevne Zone' }}</h5>
+                        <h5 class="item-title">{{ Auth::user()->name ?? 'Farhan Khilji' }}</h5>
                         <span>Admin</span>
                     </div>
                     <div class="admin-img">

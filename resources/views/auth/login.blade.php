@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AKKHOR | Login')
+@section('title', 'WTS | Login')
 
 @section('content')
     <!-- Login Page Start Here -->
@@ -8,7 +8,7 @@
         <div class="login-page-content">
             <div class="login-box">
                 <div class="item-logo">
-                    <img src="{{ asset('img/logo2.png') }}" alt="logo">
+                    <img src="{{ asset('img/wtslogo.png') }}" alt="logo">
                 </div>
                 <form method="POST" action="{{ route('login.post') }}" class="login-form">
                     @csrf
@@ -60,10 +60,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="log-in">
-                Don't have an account? <a href="{{ route('register') }}">Signup now</a>
+            <div class="sign-up">
+                Don't have an account? <a href="{{ route('register') }}" class="nav-link"><i class="fas fa-angle-right"></i>Register Now</a>
             </div>
         </div>
     </div>
-
 @endsection

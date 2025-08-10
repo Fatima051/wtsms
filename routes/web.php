@@ -195,7 +195,10 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::post('/logout', action: [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [LoginController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [LoginController::class, 'register'])->name('register.post');
+Route::get('/register', [LoginController::class, 'register'])->name('register');
+Route::get('/register', function () {return view('auth.register');
 
+});
 
 
 // Home Route

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'AKKHOR | Register')
+@section('title', 'WTS | Register')
 
 @section('content')
     <!-- register Page Start Here -->
@@ -8,7 +8,7 @@
         <div class="login-page-content">
             <div class="login-box">
                 <div class="item-logo">
-                    <img src="{{ asset('img/logo2.png') }}" alt="logo">
+                    <img src="{{ asset('img/WTS.png') }}" alt="logo">
                 </div>
                 <form method="POST" action="{{ route('register.post') }}" class="login-form">
                     @csrf
