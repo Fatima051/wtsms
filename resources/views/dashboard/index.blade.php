@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Dashboard')
+@section('title', 'WTS')
 
 @section('dashboard-content')
     <!-- Sidebar Area End Here -->
@@ -10,7 +10,7 @@
             <h3>Admin Dashboard</h3>
             <ul>
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="{{ route('dashboard.index') }}">Home</a>
                 </li>
                 <li>Admin</li>
             </ul>

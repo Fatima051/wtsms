@@ -30,9 +30,6 @@
                         <a href="{{ route('students.all') }}" class="nav-link"><i class="fas fa-angle-right"></i>All Students</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('students.details') }}" class="nav-link"><i class="fas fa-angle-right"></i>Student Details</a>
-                    </li>
-                    <li class="nav-item">
                         <a href="{{ route('students.admit') }}" class="nav-link"><i class="fas fa-angle-right"></i>Admission Form</a>
                     </li>
                     <li class="nav-item">

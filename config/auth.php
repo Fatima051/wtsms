@@ -35,12 +35,14 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+  'guards' => [
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
     ],
+    // ...
+],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -58,12 +60,12 @@ return [
     | Supported: "database", "eloquent"
     |
     */
+'providers' => [
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\LoginModel::class,
+    ],
 
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-        'model' => App\Models\LoginModel::class, // <--- use your model
-          ],
 
         // 'users' => [
         //     'driver' => 'database',

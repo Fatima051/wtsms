@@ -103,9 +103,7 @@
                             @forelse($students as $student)
                                 <tr>
                                     <td>#{{ str_pad($student->rollno, 4, '0', STR_PAD_LEFT) }}</td>
-                                    <td>
-                                        <a href="{{ route('students.details', $student->id) }}">{{ $student->name }}</a>
-                                    </td>
+                                    <td>{{ $student->name }}</td>
                                     <td>{{ $student->gender }}</td>
                                     <td>{{ $student->class }}</td>
                                     <td>{{ $student->section }}</td>
@@ -160,51 +158,56 @@
     </div>
 
     {{-- Search Script --}}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const inputs = document.querySelectorAll("#searchRoll, #searchName, #searchClass");
-            const rows = document.querySelectorAll("tbody tr");
-            const clearBtn = document.getElementById("clearSearch");
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = document.querySelectorAll("#searchRoll, #searchName, #searchClass");
+        const rows = document.querySelectorAll("tbody tr");
+        const clearBtn = document.getElementById("clearSearch");
 
-            function searchTable() {
-                const rollVal = document.getElementById("searchRoll").value.toLowerCase();
-                const nameVal = document.getElementById("searchName").value.toLowerCase();
-                const classVal = document.getElementById("searchClass").value.toLowerCase();
+        function searchTable() {
+            const rollVal = document.getElementById("searchRoll").value.toLowerCase().trim();
+            const nameVal = document.getElementById("searchName").value.toLowerCase().trim();
+            const classVal = document.getElementById("searchClass").value.toLowerCase().trim();
 
-                rows.forEach(row => {
-                    let rollCell = row.cells[0]?.textContent.toLowerCase();
-                    let nameCell = row.cells[1]?.textContent.toLowerCase();
-                    let classCell = row.cells[3]?.textContent.toLowerCase();
+            rows.forEach(row => {
+                // Get cell texts
+                let rollCellRaw = row.cells[0]?.textContent.toLowerCase().trim() || "";
+                // Remove leading '#' from roll for searching
+                let rollCell = rollCellRaw.startsWith('#') ? rollCellRaw.substring(1) : rollCellRaw;
 
-                    let match = true;
+                let nameCell = row.cells[1]?.textContent.toLowerCase().trim() || "";
+                let classCell = row.cells[3]?.textContent.toLowerCase().trim() || "";
 
-                    row.querySelectorAll("td").forEach(td => td.classList.remove("highlight"));
+                let match = true;
 
-                    if (rollVal && !rollCell.includes(rollVal)) match = false;
-                    if (nameVal && !nameCell.includes(nameVal)) match = false;
-                    if (classVal && !classCell.includes(classVal)) match = false;
+                // Remove previous highlights
+                row.querySelectorAll("td").forEach(td => td.classList.remove("highlight"));
 
-                    if (match) {
-                        row.style.display = "";
-                        if (rollVal && rollCell.includes(rollVal)) row.cells[0].classList.add("highlight");
-                        if (nameVal && nameCell.includes(nameVal)) row.cells[1].classList.add("highlight");
-                        if (classVal && classCell.includes(classVal)) row.cells[3].classList.add(
-                            "highlight");
-                    } else {
-                        row.style.display = "none";
-                    }
-                });
-            }
+                if (rollVal && !rollCell.includes(rollVal)) match = false;
+                if (nameVal && !nameCell.includes(nameVal)) match = false;
+                if (classVal && !classCell.includes(classVal)) match = false;
 
-            inputs.forEach(input => input.addEventListener("keyup", searchTable));
-
-            clearBtn.addEventListener("click", function() {
-                inputs.forEach(input => input.value = "");
-                rows.forEach(row => {
+                if (match) {
                     row.style.display = "";
-                    row.querySelectorAll("td").forEach(td => td.classList.remove("highlight"));
-                });
+                    if (rollVal && rollCell.includes(rollVal)) row.cells[0].classList.add("highlight");
+                    if (nameVal && nameCell.includes(nameVal)) row.cells[1].classList.add("highlight");
+                    if (classVal && classCell.includes(classVal)) row.cells[3].classList.add("highlight");
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        inputs.forEach(input => input.addEventListener("keyup", searchTable));
+
+        clearBtn.addEventListener("click", function() {
+            inputs.forEach(input => input.value = "");
+            rows.forEach(row => {
+                row.style.display = "";
+                row.querySelectorAll("td").forEach(td => td.classList.remove("highlight"));
             });
         });
-    </script>
+    });
+</script>
+
 @endsection

@@ -18,21 +18,37 @@ class LoginController extends Controller
 
     // Handle login
     public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string|min:6',
-        ]);
+{
+    // Validate input first
+    $request->validate([
+        'username' => 'required|string',
+        'password' => 'required|string|min:6',
+    ]);
 
-        if (Auth::guard('web')->attempt($credentials, $request->filled('remember'))) {
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
-        }
+    // Fetch user by username
+    $user = LoginModel::where('username', $request->username)->first();
 
-        return back()->withErrors([
-            'username' => 'Invalid username or password.',
-        ])->onlyInput('username');
+    if (!$user) {
+        // User not found
+        return back()->withErrors(['username' => 'User not found'])->onlyInput('username');
     }
+
+    // Check if the entered password matches the hashed password in DB
+    if (!\Hash::check($request->password, $user->password)) {
+        // Password does not match
+        return back()->withErrors(['username' => 'Invalid password'])->onlyInput('username');
+    }
+
+    // Log the user in manually
+    Auth::login($user);
+
+    // Regenerate session to prevent fixation
+    $request->session()->regenerate();
+
+    // Redirect to intended page or dashboard
+    return redirect()->intended('/dashboard');
+}
+
 
     // Logout
     public function logout(Request $request)

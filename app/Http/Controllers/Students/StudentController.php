@@ -20,10 +20,10 @@ class StudentController extends Controller
     }
 
     public function details($id)
-    {
-        $student = StudentModel::findOrFail($id);
-        return view('students.details', compact('student'));
-    }
+{
+    // Redirect back so detail page won't show
+    return redirect()->route('students.all');
+}
 
     public function addStore(Request $request)
     {

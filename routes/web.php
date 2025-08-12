@@ -46,8 +46,6 @@ Route::get('/all-student.html', function () {
     return redirect()->route('students.all');
 });
 
-// routes/web.php
-Route::get('/students/details/{id}', [StudentController::class, 'details'])->name('students.details');
 
 Route::get('/admit-form.html', function () {
     return redirect()->route('students.admit');
@@ -211,7 +209,6 @@ Route::prefix('dashboard')->name('dashboard.')->group(function () {
 Route::prefix('students')->name('students.')->group(function () {
     Route::get('/', [StudentController::class, 'index'])->name('index');
     Route::get('/all', [StudentController::class, 'all'])->name('all');
-    Route::get('/details', [StudentController::class, 'details'])->name('details');
     Route::get('/admit', [StudentController::class, 'admit'])->name('admit');
     Route::post('/admit', [StudentController::class, 'store'])->name('store');
     Route::get('/promotion', [StudentController::class, 'promotion'])->name('promotion');

@@ -45,12 +45,12 @@
                         <span>Admin</span>
                     </div>
                     <div class="admin-img">
-                        <img src="{{ asset('img/figure/admin.jpg') }}" alt="Admin">
+                        <img src="{{ asset('img/figure/admin1.png') }}" alt="Admin">
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="item-header">
-                        <h6 class="item-title">{{ Auth::user()->name ?? 'Steven Zone' }}</h6>
+                        <h6 class="item-title">{{ Auth::user()->name ?? 'Farhan Khilji' }}</h6>
                     </div>
                     <div class="item-content">
                         <ul class="settings-list">
