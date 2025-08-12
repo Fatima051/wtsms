@@ -5,7 +5,9 @@
     <!-- Header Menu Area Start Here -->
     @include('partials.header')
     <!-- Header Menu Area End Here -->
-    
+    <!-- In your main layout (layouts.dashboard) add Bootstrap JS at the bottom -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Page Area Start Here -->
     <div class="dashboard-page-one">
         <!-- Sidebar Area Start Here -->

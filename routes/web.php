@@ -7,12 +7,8 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Students\StudentController;
 use App\Http\Controllers\Teachers\TeacherController;
 use App\Http\Controllers\Parents\ParentController;
-use App\Http\Controllers\Library\BookController;
 use App\Http\Controllers\Account\FeesController;
 use App\Http\Controllers\Account\ExpenseController;
-use App\Http\Controllers\Classes\ClassController;
-use App\Http\Controllers\Classes\SubjectController;
-use App\Http\Controllers\Classes\RoutineController;
 use App\Http\Controllers\Attendance\AttendanceController;
 use App\Http\Controllers\Exams\ExamController;
 use App\Http\Controllers\Transport\TransportController;
@@ -23,12 +19,12 @@ use App\Http\Controllers\UI\UIElementsController;
 use App\Http\Controllers\Pages\PagesController;
 use App\Http\Controllers\Account\AccountSettingsController;
 
+
 // Test Route
 Route::get('/test', function () {
     return 'Routes are working!';
 })->name('test');
 
-// Redirect old HTML files to new Laravel routes
 Route::get('/index.html', function () {
     return redirect()->route('dashboard.index');
 });
@@ -45,21 +41,33 @@ Route::get('/index5.html', function () {
     return redirect()->route('dashboard.index5');
 });
 
+
 Route::get('/all-student.html', function () {
     return redirect()->route('students.all');
 });
 
-Route::get('/student-details.html', function () {
-    return redirect()->route('students.details');
-});
+// routes/web.php
+Route::get('/students/details/{id}', [StudentController::class, 'details'])->name('students.details');
 
 Route::get('/admit-form.html', function () {
     return redirect()->route('students.admit');
 });
+Route::get('/promotion', [StudentController::class, 'promotion'])->name('students.promotion');
+    Route::post('/promote', [StudentController::class, 'promote'])->name('students.promote');
 
-Route::get('/student-promotion.html', function () {
-    return redirect()->route('students.promotion');
-});
+Route::get('/students/add', [StudentController::class, 'add'])->name('students.add');
+
+
+Route::post('/students/add', [StudentController::class, 'addStore'])->name('students.add.store');
+
+Route::get('/students/edit/{id}', [StudentController::class, 'edit'])->name('students.edit');
+
+Route::put('/students/update/{id}', [StudentController::class, 'update'])->name('students.update');
+
+Route::delete('/students/delete/{id}', [StudentController::class, 'delete'])->name('students.delete');
+
+Route::get('/students/refresh/{id}', [StudentController::class, 'refresh'])->name('students.refresh');
+
 
 Route::get('/all-teacher.html', function () {
     return redirect()->route('teachers.all');
@@ -89,13 +97,7 @@ Route::get('/add-parents.html', function () {
     return redirect()->route('parents.create');
 });
 
-Route::get('/all-book.html', function () {
-    return redirect()->route('books.all');
-});
 
-Route::get('/add-book.html', function () {
-    return redirect()->route('books.create');
-});
 
 Route::get('/all-fees.html', function () {
     return redirect()->route('fees.all');
@@ -107,14 +109,6 @@ Route::get('/all-expense.html', function () {
 
 Route::get('/add-expense.html', function () {
     return redirect()->route('expenses.create');
-});
-
-Route::get('/all-class.html', function () {
-    return redirect()->route('classes.all');
-});
-
-Route::get('/add-class.html', function () {
-    return redirect()->route('classes.create');
 });
 
 Route::get('/all-subject.html', function () {
@@ -244,13 +238,8 @@ Route::prefix('parents')->name('parents.')->group(function () {
     Route::post('/add', [ParentController::class, 'store'])->name('store');
 });
 
-// Library Routes
-Route::prefix('books')->name('books.')->group(function () {
-    Route::get('/', [BookController::class, 'index'])->name('index');
-    Route::get('/all', [BookController::class, 'all'])->name('all');
-    Route::get('/add', [BookController::class, 'create'])->name('create');
-    Route::post('/add', [BookController::class, 'store'])->name('store');
-});
+
+
 
 // Account Routes
 Route::prefix('fees')->name('fees.')->group(function () {
@@ -266,23 +255,9 @@ Route::prefix('expenses')->name('expenses.')->group(function () {
     Route::post('/add', [ExpenseController::class, 'store'])->name('store');
 });
 
-// Classes Routes
-Route::prefix('classes')->name('classes.')->group(function () {
-    Route::get('/', [ClassController::class, 'index'])->name('index');
-    Route::get('/all', [ClassController::class, 'all'])->name('all');
-    Route::get('/add', [ClassController::class, 'create'])->name('create');
-    Route::post('/add', [ClassController::class, 'store'])->name('store');
-});
 
-Route::prefix('subjects')->name('subjects.')->group(function () {
-    Route::get('/', [SubjectController::class, 'index'])->name('index');
-    Route::get('/all', [SubjectController::class, 'all'])->name('all');
-});
 
-Route::prefix('routine')->name('routine.')->group(function () {
-    Route::get('/', [RoutineController::class, 'index'])->name('index');
-    Route::get('/class', [RoutineController::class, 'classRoutine'])->name('class');
-});
+
 
 // Attendance Routes
 Route::prefix('attendance')->name('attendance.')->group(function () {
@@ -380,13 +355,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/add', [ParentController::class, 'store'])->name('store');
     });
     
-    // Library routes that require authentication
-    Route::prefix('books')->name('books.')->group(function () {
-        Route::get('/', [BookController::class, 'index'])->name('index');
-        Route::get('/all', [BookController::class, 'all'])->name('all');
-        Route::get('/add', [BookController::class, 'create'])->name('create');
-        Route::post('/add', [BookController::class, 'store'])->name('store');
-    });
+    
     
     // Account routes that require authentication
     Route::prefix('fees')->name('fees.')->group(function () {
@@ -402,23 +371,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/add', [ExpenseController::class, 'store'])->name('store');
     });
     
-    // Classes routes that require authentication
-    Route::prefix('classes')->name('classes.')->group(function () {
-        Route::get('/', [ClassController::class, 'index'])->name('index');
-        Route::get('/all', [ClassController::class, 'all'])->name('all');
-        Route::get('/add', [ClassController::class, 'create'])->name('create');
-        Route::post('/add', [ClassController::class, 'store'])->name('store');
-    });
     
-    Route::prefix('subjects')->name('subjects.')->group(function () {
-        Route::get('/', [SubjectController::class, 'index'])->name('index');
-        Route::get('/all', [SubjectController::class, 'all'])->name('all');
-    });
-    
-    Route::prefix('routine')->name('routine.')->group(function () {
-        Route::get('/', [RoutineController::class, 'index'])->name('index');
-        Route::get('/class', [RoutineController::class, 'classRoutine'])->name('class');
-    });
     
     // Attendance routes that require authentication
     Route::prefix('attendance')->name('attendance.')->group(function () {

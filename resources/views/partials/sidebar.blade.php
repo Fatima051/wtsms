@@ -38,6 +38,9 @@
                     <li class="nav-item">
                         <a href="{{ route('students.promotion') }}" class="nav-link"><i class="fas fa-angle-right"></i>Student Promotion</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('students.add') }}" class="nav-link"><i class="fas fa-angle-right"></i>Student Add</a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item sidebar-nav-item">
@@ -71,17 +74,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item sidebar-nav-item">
-                <a href="#" class="nav-link"><i class="flaticon-books"></i><span>Library</span></a>
-                <ul class="nav sub-group-menu">
-                    <li class="nav-item">
-                        <a href="{{ route('books.all') }}" class="nav-link"><i class="fas fa-angle-right"></i>All Book</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('books.create') }}" class="nav-link"><i class="fas fa-angle-right"></i>Add New Book</a>
-                    </li>
-                </ul>
-            </li>
+            
             <li class="nav-item sidebar-nav-item">
                 <a href="#" class="nav-link"><i class="flaticon-technological"></i><span>Account</span></a>
                 <ul class="nav sub-group-menu">
@@ -96,23 +89,8 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item sidebar-nav-item">
-                <a href="#" class="nav-link"><i class="flaticon-maths-class-materials-cross-of-a-pencil-and-a-ruler"></i><span>Class</span></a>
-                <ul class="nav sub-group-menu">
-                    <li class="nav-item">
-                        <a href="{{ route('classes.all') }}" class="nav-link"><i class="fas fa-angle-right"></i>All Classes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('classes.create') }}" class="nav-link"><i class="fas fa-angle-right"></i>Add New Class</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('subjects.all') }}" class="nav-link"><i class="flaticon-open-book"></i><span>Subject</span></a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('routine.class') }}" class="nav-link"><i class="flaticon-calendar"></i><span>Class Routine</span></a>
-            </li>
+           
+            
             <li class="nav-item">
                 <a href="{{ route('attendance.student') }}" class="nav-link"><i class="flaticon-checklist"></i><span>Attendance</span></a>
             </li>

@@ -3,33 +3,69 @@
 @section('title', 'Student Details')
 
 @section('dashboard-content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="breadcrumb-main">
-                <h4 class="text-capitalize breadcrumb-title">Student Details</h4>
-                <div class="breadcrumb-action justify-content-center flex-wrap">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}"><i class="uil uil-estate"></i>Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Student Details</li>
-                        </ol>
-                    </nav>
+    <div class="container-fluid">
+        <div class="breadcrumbs-area">
+            <h3>Students</h3>
+            <ul>
+                <li><a href="{{ route('dashboard.index') }}">Home</a></li>
+                <li>Student Details</li>
+            </ul>
+        </div>
+
+        <div class="card height-auto">
+            <div class="card-body">
+                <div class="single-info-details">
+                    <div class="item-img">
+                        <img src="{{ asset('img/figure/student1.jpg') }}" alt="student">
+                    </div>
+                    <div class="item-content">
+                        <h3 class="text-dark-medium font-medium">{{ $student->name }}</h3>
+                        <div class="info-table table-responsive">
+                            <table class="table text-nowrap">
+                                <tbody>
+                                    <tr>
+                                        <td>Name:</td>
+                                        <td>{{ $student->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Roll:</td>
+                                        <td>{{ $student->rollno }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Class:</td>
+                                        <td>{{ $student->class }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Section:</td>
+                                        <td>{{ $student->section }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gender:</td>
+                                        <td>{{ $student->gender }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Parents:</td>
+                                        <td>{{ $student->parents }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date Of Birth:</td>
+                                        <td>{{ $student->dob }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Address:</td>
+                                        <td>{{ $student->address }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone:</td>
+                                        <td>{{ $student->phone }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Student Information</h4>
-                </div>
-                <div class="card-body">
-                    <p>Student details page is under construction. Content will be added soon.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
