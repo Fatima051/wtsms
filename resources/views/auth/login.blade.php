@@ -37,11 +37,7 @@
                         @enderror
                     </div>
                     <div class="form-group d-flex align-items-center justify-content-between">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="remember" name="remember"
-                                {{ old('remember') ? 'checked' : '' }}>
-                            <label for="remember" class="form-check-label">Remember Me</label>
-                        </div>
+                       
                         @if (Route::has('password.request'))
                             <a href="{{ route('password.request') }}" class="forgot-btn">Forgot Password?</a>
                         @endif

@@ -208,6 +208,18 @@
             });
         });
     });
+    document.getElementById('clearSearch').addEventListener('click', function () {
+    // Clear all input values
+    document.getElementById('searchRoll').value = '';
+    document.getElementById('searchName').value = '';
+    document.getElementById('searchClass').value = '';
+
+    // Trigger input events to refresh the table
+    let event = new Event('input');
+    document.getElementById('searchRoll').dispatchEvent(event);
+    document.getElementById('searchName').dispatchEvent(event);
+    document.getElementById('searchClass').dispatchEvent(event);
+});
 </script>
 
 @endsection

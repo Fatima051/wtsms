@@ -38,6 +38,9 @@
                     <li class="nav-item">
                         <a href="{{ route('students.add') }}" class="nav-link"><i class="fas fa-angle-right"></i>Student Add</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('students.allclasses') }}" class="nav-link"><i class="fas fa-angle-right"></i>All Classes</a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item sidebar-nav-item">

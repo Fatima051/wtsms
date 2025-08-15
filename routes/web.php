@@ -66,6 +66,12 @@ Route::delete('/students/delete/{id}', [StudentController::class, 'delete'])->na
 
 Route::get('/students/refresh/{id}', [StudentController::class, 'refresh'])->name('students.refresh');
 
+Route::get('/students/allclasses', [StudentController::class, 'allclasses'])->name('students.allclasses');
+Route::get('/students/class/edit/{className}', [StudentController::class, 'editClass'])->name('students.class.edit');
+Route::post('/students/class/update/{id}', [StudentController::class, 'updateClass'])->name('students.class.update');
+Route::get('/students/class/{className}', [StudentController::class, 'classStudents'])->name('students.class.students');
+Route::get('/classes/{className}', [StudentController::class, 'classStudents'])->name('classes.students');
+
 
 Route::get('/all-teacher.html', function () {
     return redirect()->route('teachers.all');
@@ -212,7 +218,8 @@ Route::prefix('students')->name('students.')->group(function () {
     Route::get('/admit', [StudentController::class, 'admit'])->name('admit');
     Route::post('/admit', [StudentController::class, 'store'])->name('store');
     Route::get('/promotion', [StudentController::class, 'promotion'])->name('promotion');
-    Route::post('/promotion', [StudentController::class, 'promote'])->name('promote');
+    Route::post('/allclasses', [StudentController::class, 'allclasses'])->name('allclasses');
+    
 });
 
 // Teachers Routes
