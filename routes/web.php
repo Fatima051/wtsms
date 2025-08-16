@@ -189,23 +189,26 @@ Route::get('/account-settings.html', function () {
 });
 
 
-// Login Routes
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+// ✅ Default route redirects to login
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
-// Logout Route
+// ✅ Login Routes
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');   // show login page
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');    // handle login
+
+// ✅ Logout Route
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Registration Routes
+// ✅ Registration Routes
 Route::get('/register', [LoginController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [LoginController::class, 'register'])->name('register.post');
 
-// Dashboard (protected)
+// ✅ Dashboard (protected)
 Route::get('/dashboard', function () {
     return view('dashboard.index');
 })->middleware('auth')->name('dashboard');
-
-
 
 // Home Route
 
