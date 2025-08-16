@@ -18,6 +18,7 @@ use App\Http\Controllers\Messages\MessageController;
 use App\Http\Controllers\UI\UIElementsController;
 use App\Http\Controllers\Pages\PagesController;
 use App\Http\Controllers\Account\AccountSettingsController;
+use App\Http\Controllers\Admissions\AdmissionsController;
 
 
 // Test Route
@@ -187,20 +188,26 @@ Route::get('/account-settings.html', function () {
     return redirect()->route('pages.account-settings');
 });
 
-// Authentication Routes
+
+// Login Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-Route::post('/logout', action: [LoginController::class, 'logout'])->name('logout');
+
+// Logout Route
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Registration Routes
 Route::get('/register', [LoginController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [LoginController::class, 'register'])->name('register.post');
-Route::get('/register', [LoginController::class, 'register'])->name('register');
-Route::get('/register', function () {return view('auth.register');
 
-});
+// Dashboard (protected)
+Route::get('/dashboard', function () {
+    return view('dashboard.index');
+})->middleware('auth')->name('dashboard');
+
 
 
 // Home Route
-Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Dashboard Routes
 Route::prefix('dashboard')->name('dashboard.')->group(function () {
@@ -260,11 +267,17 @@ Route::prefix('expenses')->name('expenses.')->group(function () {
 });
 
 
-
+Route::prefix('admissions')->name('admissions.')->group(function () {
+    Route::get('/', [AdmissionsController::class, 'all'])->name('all');           // Admissions main page
+    Route::get('/add', [AdmissionsController::class, 'add'])->name('add');        // Add student
+    Route::post('/store', [AdmissionsController::class, 'store'])->name('store'); // Store student
+    Route::delete('/{id}', [AdmissionsController::class, 'destroy'])->name('destroy'); // Delete student
+    Route::get('/withdraw', [AdmissionsController::class, 'withdraw'])->name('withdraw'); // Withdraw student
+});
 
 
 // Attendance Routes
-Route::prefix('attendance')->name('attendance.')->group(function () {
+Route::prefix('attendance')->name(value: 'attendance.')->group(function () {
     Route::get('/', [AttendanceController::class, 'index'])->name('index');
     Route::get('/student', [AttendanceController::class, 'studentAttendance'])->name('student');
     Route::post('/mark', [AttendanceController::class, 'markAttendance'])->name('mark');

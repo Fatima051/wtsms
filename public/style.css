@@ -58,6 +58,31 @@ Version: 1.0
 /*=======================================================================
 [01] TYPOGRAPHY
 =========================================================================*/
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+/* Brand Colors */
+.bg-fb { background: #3b5998; }
+.bg-twitter { background: #1da1f2; }
+.bg-gplus { background: #db4437; }
+.bg-git { background: #333; }
+
+/* Hover Effect */
+.social-btn:hover {
+    transform: scale(1.1);
+    opacity: 0.85;
+}
+
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900);
 html {
   height: 100%;

@@ -7,9 +7,11 @@
     <div class="login-page-wrap">
         <div class="login-page-content">
             <div class="login-box">
-                <div class="item-logo">
+                <div class="item-logo text-center">
                     <img src="{{ asset('img/wtslogo.png') }}" alt="logo">
                 </div>
+
+                {{-- Login Form --}}
                 <form method="POST" action="{{ route('login.post') }}" class="login-form">
                     @csrf
                     <div class="form-group">
@@ -24,6 +26,7 @@
                             </span>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label>Password</label>
                         <input type="password" name="password" placeholder="Enter password"
@@ -36,28 +39,40 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-group d-flex align-items-center justify-content-between">
-                       
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="forgot-btn">Forgot Password?</a>
-                        @endif
-                    </div>
+                    
                     <div class="form-group">
                         <button type="submit" class="login-btn">Login</button>
                     </div>
                 </form>
-                <div class="login-social">
-                    <p>or sign in with</p>
-                    <ul>
-                        <li><a href="#" class="bg-fb"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#" class="bg-twitter"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#" class="bg-gplus"><i class="fab fa-google-plus-g"></i></a></li>
-                        <li><a href="#" class="bg-git"><i class="fab fa-github"></i></a></li>
-                    </ul>
+
+                {{-- Social Icons --}}
+<div class="login-social text-center mt-4">
+    <p>or sign in with</p>
+    <ul class="d-flex justify-content-center list-unstyled">
+        <li class="mx-2">
+            <a href="#" class="social-btn bg-fb"><i class="fab fa-facebook-f"></i></a>
+        </li>
+        <li class="mx-2">
+            <a href="#" class="social-btn bg-twitter"><i class="fab fa-twitter"></i></a>
+        </li>
+        <li class="mx-2">
+            <a href="#" class="social-btn bg-gplus"><i class="fab fa-google-plus-g"></i></a>
+        </li>
+        <li class="mx-2">
+            <a href="#" class="social-btn bg-git"><i class="fab fa-github"></i></a>
+        </li>
+    </ul>
+</div>
+
+
+                {{-- Register Link --}}
+                <div class="sign-up text-center mt-3">
+                    <p>Don't have an account? 
+                        <a href="{{ route('auth.register') }}" class="nav-link d-inline">
+                            <i class="fas fa-angle-right"></i> Register Now
+                        </a>
+                    </p>
                 </div>
-            </div>
-            <div class="sign-up">
-                Don't have an account? <a href="{{ route('register') }}" class="nav-link"><i class="fas fa-angle-right"></i>Register Now</a>
             </div>
         </div>
     </div>

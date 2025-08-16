@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'WTS')
+@section('title', 'WTS | Home')
 
 @section('dashboard-content')
     <!-- Sidebar Area End Here -->
