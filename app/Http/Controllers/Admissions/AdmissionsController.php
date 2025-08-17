@@ -13,7 +13,7 @@ class AdmissionsController extends Controller
         return view('admissions.all', compact('admissions'));
     }
 
-    public function create()
+    public function add()
     {
         return view('admissions.add');
     }

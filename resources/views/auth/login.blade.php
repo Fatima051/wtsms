@@ -39,35 +39,35 @@
                             </span>
                         @enderror
                     </div>
-                    
+
                     <div class="form-group">
                         <button type="submit" class="login-btn">Login</button>
                     </div>
                 </form>
 
                 {{-- Social Icons --}}
-<div class="login-social text-center mt-4">
-    <p>or sign in with</p>
-    <ul class="d-flex justify-content-center list-unstyled">
-        <li class="mx-2">
-            <a href="#" class="social-btn bg-fb"><i class="fab fa-facebook-f"></i></a>
-        </li>
-        <li class="mx-2">
-            <a href="#" class="social-btn bg-twitter"><i class="fab fa-twitter"></i></a>
-        </li>
-        <li class="mx-2">
-            <a href="#" class="social-btn bg-gplus"><i class="fab fa-google-plus-g"></i></a>
-        </li>
-        <li class="mx-2">
-            <a href="#" class="social-btn bg-git"><i class="fab fa-github"></i></a>
-        </li>
-    </ul>
-</div>
+                <div class="login-social text-center mt-4">
+                    <p>or sign in with</p>
+                    <ul class="d-flex justify-content-center list-unstyled">
+                        <li class="mx-2">
+                            <a href="#" class="social-btn bg-fb"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#" class="social-btn bg-twitter"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#" class="social-btn bg-gplus"><i class="fab fa-google-plus-g"></i></a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#" class="social-btn bg-git"><i class="fab fa-github"></i></a>
+                        </li>
+                    </ul>
+                </div>
 
 
                 {{-- Register Link --}}
                 <div class="sign-up text-center mt-3">
-                    <p>Don't have an account? 
+                    <p>Don't have an account?
                         <a href="{{ route('auth.register') }}" class="nav-link d-inline">
                             <i class="fas fa-angle-right"></i> Register Now
                         </a>
