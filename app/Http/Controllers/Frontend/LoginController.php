@@ -26,7 +26,7 @@ class LoginController extends Controller
 
     if (Auth::attempt($credentials, $request->filled('remember'))) {
         $request->session()->regenerate();
-        return redirect()->route('/dashboard');
+        return redirect()->intended('/dashboard');
     }
 
     return back()->withErrors([
@@ -70,4 +70,3 @@ class LoginController extends Controller
         return redirect('/dashboard')->with('success', 'Account created successfully.');
     }
 }
-

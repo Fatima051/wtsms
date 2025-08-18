@@ -29,3 +29,4 @@ Thumbs.db
 .idea
 .phpunit.result.cache
 .env.testing
+composer.lock

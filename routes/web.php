@@ -189,152 +189,27 @@ Route::get('/account-settings.html', function () {
 });
 
 
-// ✅ Default route redirects to login
+// --- Public & Guest Routes ---
+
+// Default route redirects to login
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// ✅ Login Routes
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');   // show login page
-Route::post('/login', [LoginController::class, 'login'])->name('login.post');    // handle login
+// Routes for guests (users who are not logged in)
+Route::middleware('guest')->group(function () {
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [LoginController::class, 'login']);
 
-// ✅ Logout Route
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-// ✅ Registration Routes
-Route::get('/register', [LoginController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [LoginController::class, 'register'])->name('register.post');
-
-// ✅ Dashboard (protected)
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->middleware('auth')->name('dashboard');
-
-// Home Route
-
-// Dashboard Routes
-Route::prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('index');
-    Route::get('/index2', [DashboardController::class, 'index2'])->name('index2');
-    Route::get('/index3', [DashboardController::class, 'index3'])->name('index3');
-    Route::get('/index4', [DashboardController::class, 'index4'])->name('index4');
-    Route::get('/index5', [DashboardController::class, 'index5'])->name('index5');
+    Route::get('register', [LoginController::class, 'showRegistrationForm'])->name('register');
+    Route::post('register', [LoginController::class, 'register'])->name('register.post');
 });
 
-// Students Routes
-Route::prefix('students')->name('students.')->group(function () {
-    Route::get('/', [StudentController::class, 'index'])->name('index');
-    Route::get('/all', [StudentController::class, 'all'])->name('all');
-    Route::get('/admit', [StudentController::class, 'admit'])->name('admit');
-    Route::post('/admit', [StudentController::class, 'store'])->name('store');
-    Route::get('/promotion', [StudentController::class, 'promotion'])->name('promotion');
-    Route::post('/allclasses', [StudentController::class, 'allclasses'])->name('allclasses');
-    
-});
+// --- Protected Routes (Require Authentication) ---
+Route::middleware('auth')->group(function () {
+    // Logout Route
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-// Teachers Routes
-Route::prefix('teachers')->name('teachers.')->group(function () {
-    Route::get('/', [TeacherController::class, 'index'])->name('index');
-    Route::get('/all', [TeacherController::class, 'all'])->name('all');
-    Route::get('/details', [TeacherController::class, 'details'])->name('details');
-    Route::get('/add', [TeacherController::class, 'create'])->name('create');
-    Route::post('/add', [TeacherController::class, 'store'])->name('store');
-    Route::get('/payment', [TeacherController::class, 'payment'])->name('payment');
-    Route::post('/payment', [TeacherController::class, 'processPayment'])->name('process-payment');
-});
-
-// Parents Routes
-Route::prefix('parents')->name('parents.')->group(function () {
-    Route::get('/', [ParentController::class, 'index'])->name('index');
-    Route::get('/all', [ParentController::class, 'all'])->name('all');
-    Route::get('/details', [ParentController::class, 'details'])->name('details');
-    Route::get('/add', [ParentController::class, 'create'])->name('create');
-    Route::post('/add', [ParentController::class, 'store'])->name('store');
-});
-
-
-
-
-// Account Routes
-Route::prefix('fees')->name('fees.')->group(function () {
-    Route::get('/', [FeesController::class, 'index'])->name('index');
-    Route::get('/all', [FeesController::class, 'all'])->name('all');
-    Route::post('/collect', [FeesController::class, 'collect'])->name('collect');
-});
-
-Route::prefix('expenses')->name('expenses.')->group(function () {
-    Route::get('/', [ExpenseController::class, 'index'])->name('index');
-    Route::get('/all', [ExpenseController::class, 'all'])->name('all');
-    Route::get('/add', [ExpenseController::class, 'create'])->name('create');
-    Route::post('/add', [ExpenseController::class, 'store'])->name('store');
-});
-
-
-Route::prefix('admissions')->name('admissions.')->group(function () {
-    Route::get('/', [AdmissionsController::class, 'all'])->name('all');           // Admissions main page
-    Route::get('/add', [AdmissionsController::class, 'add'])->name('add');        // Add student
-    Route::post('/store', [AdmissionsController::class, 'store'])->name('store'); // Store student
-    Route::delete('/{id}', [AdmissionsController::class, 'destroy'])->name('destroy'); // Delete student
-    Route::get('/withdraw', [AdmissionsController::class, 'withdraw'])->name('withdraw'); // Withdraw student
-});
-
-
-// Attendance Routes
-Route::prefix('attendance')->name(value: 'attendance.')->group(function () {
-    Route::get('/', [AttendanceController::class, 'index'])->name('index');
-    Route::get('/student', [AttendanceController::class, 'studentAttendance'])->name('student');
-    Route::post('/mark', [AttendanceController::class, 'markAttendance'])->name('mark');
-});
-
-// Exams Routes
-Route::prefix('exams')->name('exams.')->group(function () {
-    Route::get('/schedule', [ExamController::class, 'schedule'])->name('schedule');
-    Route::get('/grades', [ExamController::class, 'grades'])->name('grades');
-    Route::post('/schedule', [ExamController::class, 'storeSchedule'])->name('store-schedule');
-    Route::post('/grades', [ExamController::class, 'storeGrades'])->name('store-grades');
-});
-
-// Transport Routes
-Route::prefix('transport')->name('transport.')->group(function () {
-    Route::get('/', [TransportController::class, 'index'])->name('index');
-});
-
-// Hostel Routes
-Route::prefix('hostel')->name('hostel.')->group(function () {
-    Route::get('/', [HostelController::class, 'index'])->name('index');
-});
-
-// Notices Routes
-Route::prefix('notices')->name('notices.')->group(function () {
-    Route::get('/', [NoticeController::class, 'index'])->name('index');
-    Route::get('/board', [NoticeController::class, 'board'])->name('board');
-});
-
-// Messages Routes
-Route::prefix('messages')->name('messages.')->group(function () {
-    Route::get('/', [MessageController::class, 'index'])->name('index');
-    Route::get('/messaging', [MessageController::class, 'messaging'])->name('messaging');
-});
-
-// UI Elements Routes
-Route::prefix('ui')->name('ui.')->group(function () {
-    Route::get('/buttons', [UIElementsController::class, 'buttons'])->name('buttons');
-    Route::get('/grid', [UIElementsController::class, 'grid'])->name('grid');
-    Route::get('/modal', [UIElementsController::class, 'modal'])->name('modal');
-    Route::get('/notification-alert', [UIElementsController::class, 'notificationAlert'])->name('notification-alert');
-    Route::get('/progress-bar', [UIElementsController::class, 'progressBar'])->name('progress-bar');
-    Route::get('/ui-tab', [UIElementsController::class, 'uiTab'])->name('ui-tab');
-    Route::get('/ui-widget', [UIElementsController::class, 'uiWidget'])->name('ui-widget');
-});
-
-// Pages Routes
-Route::prefix('pages')->name('pages.')->group(function () {
-    Route::get('/map', [PagesController::class, 'map'])->name('map');
-    Route::get('/account-settings', [AccountSettingsController::class, 'index'])->name('account-settings');
-});
-
-// Protected Routes (require authentication)
-Route::middleware(['auth'])->group(function () {
     // Dashboard routes that require authentication
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -343,18 +218,20 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/index4', [DashboardController::class, 'index4'])->name('index4');
         Route::get('/index5', [DashboardController::class, 'index5'])->name('index5');
     });
-    
+
     // Students routes that require authentication
     Route::prefix('students')->name('students.')->group(function () {
         Route::get('/', [StudentController::class, 'index'])->name('index');
         Route::get('/all', [StudentController::class, 'all'])->name('all');
-        Route::get('/details', [StudentController::class, 'details'])->name('details');
+        // Note: 'details' route was missing from the first block, assuming it's needed.
+        Route::get('/details/{id}', [StudentController::class, 'details'])->name('details');
         Route::get('/admit', [StudentController::class, 'admit'])->name('admit');
         Route::post('/admit', [StudentController::class, 'store'])->name('store');
         Route::get('/promotion', [StudentController::class, 'promotion'])->name('promotion');
         Route::post('/promotion', [StudentController::class, 'promote'])->name('promote');
+        Route::post('/allclasses', [StudentController::class, 'allclasses'])->name('allclasses');
     });
-    
+
     // Teachers routes that require authentication
     Route::prefix('teachers')->name('teachers.')->group(function () {
         Route::get('/', [TeacherController::class, 'index'])->name('index');
@@ -365,7 +242,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/payment', [TeacherController::class, 'payment'])->name('payment');
         Route::post('/payment', [TeacherController::class, 'processPayment'])->name('process-payment');
     });
-    
+
     // Parents routes that require authentication
     Route::prefix('parents')->name('parents.')->group(function () {
         Route::get('/', [ParentController::class, 'index'])->name('index');
@@ -374,32 +251,36 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/add', [ParentController::class, 'create'])->name('create');
         Route::post('/add', [ParentController::class, 'store'])->name('store');
     });
-    
-    
-    
+
     // Account routes that require authentication
     Route::prefix('fees')->name('fees.')->group(function () {
         Route::get('/', [FeesController::class, 'index'])->name('index');
         Route::get('/all', [FeesController::class, 'all'])->name('all');
         Route::post('/collect', [FeesController::class, 'collect'])->name('collect');
     });
-    
+
     Route::prefix('expenses')->name('expenses.')->group(function () {
         Route::get('/', [ExpenseController::class, 'index'])->name('index');
         Route::get('/all', [ExpenseController::class, 'all'])->name('all');
         Route::get('/add', [ExpenseController::class, 'create'])->name('create');
         Route::post('/add', [ExpenseController::class, 'store'])->name('store');
     });
-    
-    
-    
+
+    Route::prefix('admissions')->name('admissions.')->group(function () {
+        Route::get('/', [AdmissionsController::class, 'all'])->name('all');
+        Route::get('/add', [AdmissionsController::class, 'add'])->name('add');
+        Route::post('/store', [AdmissionsController::class, 'store'])->name('store');
+        Route::delete('/{id}', [AdmissionsController::class, 'destroy'])->name('destroy');
+        Route::get('/withdraw', [AdmissionsController::class, 'withdraw'])->name('withdraw');
+    });
+
     // Attendance routes that require authentication
     Route::prefix('attendance')->name('attendance.')->group(function () {
         Route::get('/', [AttendanceController::class, 'index'])->name('index');
         Route::get('/student', [AttendanceController::class, 'studentAttendance'])->name('student');
         Route::post('/mark', [AttendanceController::class, 'markAttendance'])->name('mark');
     });
-    
+
     // Exams routes that require authentication
     Route::prefix('exams')->name('exams.')->group(function () {
         Route::get('/schedule', [ExamController::class, 'schedule'])->name('schedule');
@@ -407,29 +288,29 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/schedule', [ExamController::class, 'storeSchedule'])->name('store-schedule');
         Route::post('/grades', [ExamController::class, 'storeGrades'])->name('store-grades');
     });
-    
+
     // Transport routes that require authentication
     Route::prefix('transport')->name('transport.')->group(function () {
         Route::get('/', [TransportController::class, 'index'])->name('index');
     });
-    
+
     // Hostel routes that require authentication
     Route::prefix('hostel')->name('hostel.')->group(function () {
         Route::get('/', [HostelController::class, 'index'])->name('index');
     });
-    
+
     // Notices routes that require authentication
     Route::prefix('notices')->name('notices.')->group(function () {
         Route::get('/', [NoticeController::class, 'index'])->name('index');
         Route::get('/board', [NoticeController::class, 'board'])->name('board');
     });
-    
+
     // Messages routes that require authentication
     Route::prefix('messages')->name('messages.')->group(function () {
         Route::get('/', [MessageController::class, 'index'])->name('index');
         Route::get('/messaging', [MessageController::class, 'messaging'])->name('messaging');
     });
-    
+
     // UI Elements routes that require authentication
     Route::prefix('ui')->name('ui.')->group(function () {
         Route::get('/buttons', [UIElementsController::class, 'buttons'])->name('buttons');
@@ -440,12 +321,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/ui-tab', [UIElementsController::class, 'uiTab'])->name('ui-tab');
         Route::get('/ui-widget', [UIElementsController::class, 'uiWidget'])->name('ui-widget');
     });
-    
+
     // Pages routes that require authentication
     Route::prefix('pages')->name('pages.')->group(function () {
         Route::get('/map', [PagesController::class, 'map'])->name('map');
         Route::get('/account-settings', [AccountSettingsController::class, 'index'])->name('account-settings');
     });
 });
-
-
